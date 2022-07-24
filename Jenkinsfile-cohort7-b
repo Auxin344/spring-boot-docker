@@ -14,16 +14,6 @@ pipeline{
         sh "mvn clean package"
       }
     }
-    stage("3.Code Quality"){
-      steps{
-        //sh "mvn sonar:sonar"
-      }
-    }
-    stage("4.Artifactory"){
-      steps{
-        //sh "mvn deploy"
-      }    
-    }
     stage("6.Approval"){
       steps{
         timeout(time:5, unit:'DAYS'){
