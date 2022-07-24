@@ -6,7 +6,7 @@ pipeline{
   stages{
     stage("1.Git Clone"){
       steps{
-        git "https://github.com/Auxin344/web-app.git"
+        git "https://github.com/Auxin344/spring-boot-docker.git"
       }
     }
     stage("2.Build"){
@@ -33,10 +33,10 @@ pipeline{
     }
     stage("7.Deploy to PrePROD"){
       steps{
-        sh "docker rm -f acadapp"
-        sh "docker rmi auxin/acadapp:latest"
-        sh "docker build -t auxin/acadapp ."
-        sh "docker run --name acadapp -d -p 2500:8080 auxin/acadapp"
+        //sh "docker rm -f acadapp"
+        //sh "docker rmi auxin/acadapp:latest"
+        sh "docker build -t auxin/spring-bootapp ."
+        sh "docker run --name spring-boot -d -p 2600:8080 auxin/spring-bootapp"
       }
     }
    }
