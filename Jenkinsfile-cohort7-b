@@ -16,12 +16,12 @@ pipeline{
     }
     stage("3.Code Quality"){
       steps{
-        sh "mvn sonar:sonar"
+        //sh "mvn sonar:sonar"
       }
     }
     stage("4.Artifactory"){
       steps{
-        sh "mvn deploy"
+        //sh "mvn deploy"
       }    
     }
     stage("6.Approval"){
