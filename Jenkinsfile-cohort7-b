@@ -1,0 +1,43 @@
+pipeline{
+  agent any
+  tools{
+    maven "Maven3.8.4"
+  }
+  stages{
+    stage("1.Git Clone"){
+      steps{
+        git "https://github.com/Auxin344/web-app.git"
+      }
+    }
+    stage("2.Build"){
+      steps{
+        sh "mvn clean package"
+      }
+    }
+    stage("3.Code Quality"){
+      steps{
+        sh "mvn sonar:sonar"
+      }
+    }
+    stage("4.Artifactory"){
+      steps{
+        sh "mvn deploy"
+      }    
+    }
+    stage("6.Approval"){
+      steps{
+        timeout(time:5, unit:'DAYS'){
+        input message: 'Approval for Production'
+      }
+      }
+    }
+    stage("7.Deploy to PrePROD"){
+      steps{
+        sh "docker rm -f acadapp"
+        sh "docker rmi auxin/acadapp:latest"
+        sh "docker build -t auxin/acadapp ."
+        sh "docker run --name acadapp -d -p 2500:8080 auxin/acadapp"
+      }
+    }
+   }
+ }
